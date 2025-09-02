@@ -1,0 +1,248 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SafetyCam Detection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #232c53;
+            --yellow: #ffd166;
+            --white: #fff;
+            --gray: #f6f6f6;
+            --red : #ff0000 ; 
+        }
+        body {
+            min-height: 100vh;
+            background: var(--gray);
+            font-family: 'Montserrat', Arial, sans-serif;
+            color: var(--deep-blue);
+        }
+        .split-bg {
+            position: absolute; 
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .split-bg .left {
+            position: absolute; left: 0; top: 0; width: 60vw; height: 100vh; background: var(--white); z-index: 1;
+        }
+        .split-bg .right {
+            position: absolute; right: 0; top: 0; width: 40vw; height: 100vh; background: var(--deep-blue); z-index: 1;
+        }
+        .split-bg .wave {
+            position: absolute; left: 55vw; top: 0; width: 45vw; height: 100vh; z-index: 2;
+        }
+        .navbar {
+            background: transparent;
+            z-index: 10;
+        }
+        .navbar-nav .nav-link {
+            color: var(--yellow) !important;
+            font-weight: 700;
+            font-size: 1.08rem;
+            margin-right: 1.2rem;
+        }
+        .navbar-nav .nav-link.active, .navbar-nav .nav-link:focus {
+            color: var(--red) !important;
+        }
+        .btn-signup {
+            background: var(--yellow);
+            color: var(--deep-blue);
+            font-weight: 700;
+            border-radius: 2rem;
+            padding: 0.4rem 1.3rem;
+            margin-left: 1rem;
+            border: none;
+        }
+        .btn-signup:hover {
+            background: #ffb400;
+            color: var(--deep-blue);
+        }
+        .main-content {
+            position: relative;
+            z-index: 3;
+            margin-top: 4.5rem;
+        }
+        .info-col {
+            padding: 3.5rem 2.5rem 3.5rem 4vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 520px;
+        }
+        .info-title {
+            font-size: 2.7rem;
+            font-weight: 900;
+            color: var(--deep-blue);
+            margin-bottom: 0.7rem;
+            letter-spacing: 1px;
+        }
+        .info-highlight {
+            color: var(--yellow);
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+        .info-desc {
+            color: #444;
+            font-size: 1.08rem;
+            margin-bottom: 2rem;
+            margin-top: 1.2rem;
+        }
+        .form-label {
+            color: var(--deep-blue);
+            font-weight: 700;
+        }
+        .form-control, .form-check-input {
+            background: #f8f9fa;
+            color: var(--deep-blue);
+            border: 1.5px solid #ffd166;
+            border-radius: 0.6rem;
+        }
+        .form-control:focus {
+            border-color: var(--deep-blue);
+            box-shadow: 0 0 0 0.13rem rgba(35,44,83,0.13);
+        }
+        .btn-primary, .btn-danger {
+            border-radius: 0.6rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 0.6rem 0;
+            letter-spacing: 0.5px;
+        }
+        .btn-primary {
+            background: var(--deep-blue);
+            border: none;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--yellow);
+            color: var(--deep-blue);
+        }
+        .btn-danger {
+            background: #fff;
+            color: var(--deep-blue);
+            border: 1.5px solid var(--deep-blue);
+        }
+        .btn-danger:hover {
+            background: var(--deep-blue);
+            color: #fff;
+        }
+        .alert-info {
+            background: #fff8e1;
+            color: var(--deep-blue);
+            border-left: 4px solid #ffd166;
+            border-radius: 0.6rem;
+        }
+        .video-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 520px;
+            padding: 3.5rem 2vw 3.5rem 2.5rem;
+        }
+        .video-card {
+            background: #fff;
+            border-radius: 1.3rem;
+            box-shadow: 0 4px 32px rgba(35,44,83,0.08), 0 1.5px 8px rgba(0,0,0,0.07);
+            border: 2px solid #ffd166;
+            padding: 2rem 2rem 1.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .video-card img {
+            border-radius: 1rem;
+            border: 2.5px solid var(--deep-blue);
+            background: #f6f6f6;
+            max-width: 100%;
+            height: auto;
+        }
+        .video-label {
+            color: var(--deep-blue);
+            font-size: 1.08rem;
+            margin-top: 0.7rem;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+        @media (max-width: 991px) {
+            .main-content { margin-top: 2.5rem; }
+            .info-col, .video-col { padding: 2rem 1rem; min-height: unset; }
+            .split-bg .left, .split-bg .right, .split-bg .wave { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="split-bg">
+        <div class="left"></div>
+        <div class="right"></div>
+        <svg class="wave" viewBox="0 0 500 100" preserveAspectRatio="none"><path d="M0,0 Q250,100 500,0 L500,100 L0,100 Z" fill="#232c53"/></svg>
+    </div>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#"><i class="bi bi-shield-lock-fill me-2"></i>SafetyCam</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Info</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+                <a class="btn btn-signup" href="#">Sign up</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container main-content">
+        <div class="row">
+            <div class="col-lg-6 info-col">
+                <div class="info-highlight mb-2">Live Detection</div>
+                <div class="info-title">SafetyCam</div>
+                <div class="info-desc">Experience real-time weapon & gesture detection with a beautiful live video feed. Stay secure and informed with our modern, AI-powered platform.</div>
+                <form method="POST" class="mb-3">
+                    <div class="mb-3">
+                        <label for="camera_url" class="form-label">Camera / RTSP / IP URL</label>
+                        <input type="text" class="form-control" id="camera_url" name="camera_url" placeholder="0 (for webcam) or rtsp://...">
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="show_feed" name="show_feed">
+                        <label class="form-check-label" for="show_feed">Show Live Feed</label>
+                    </div>
+                    <div class="row g-2 flex-column flex-sm-row">
+                        <div class="col-12 col-sm-6 d-grid">
+                            <button type="submit" class="btn btn-primary">Start Detection</button>
+                        </div>
+                        <div class="col-12 col-sm-6 d-grid">
+                            <a href="/stop" class="btn btn-danger">Stop Detection</a>
+                        </div>
+                    </div>
+                </form>
+                {% if message %}
+                <div class="alert alert-info mt-4 text-center">{{ message }}</div>
+                {% endif %}
+            </div>
+            <div class="col-lg-6 video-col">
+                {% if show_feed %}
+                <div class="video-card">
+                    <img src="{{ url_for('video_feed') }}" width="416" height="416" alt="Live Video Feed">
+                    <div class="video-label">Live Video Feed</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="footer mt-4 text-center" style="color:#232c53;">
+            &copy; {{ 2024 }} SafetyCam &mdash; Inspired by modern web design
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
