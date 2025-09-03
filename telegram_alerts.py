@@ -3,8 +3,8 @@ import requests
 import os
 
 
-TELEGRAM_TOKEN = '8178986331:AAEv1tCmVI3jz8cTNys52BS4xP548DpJdyg'
-CHAT_ID = '1116435276'
+TELEGRAM_TOKEN = 'YOUR_TELEGRAM_TOKEN'
+CHAT_ID = 'YOUR_CHAT_ID'
 
 def send_telegram_alert(message, image_path=None):
     try:
