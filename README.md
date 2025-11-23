@@ -46,7 +46,22 @@ Fetches and displays geolocation where the incident was detected.
 🗂️ Project Structure
 
 
-<img width="876" height="355" alt="image" src="https://github.com/user-attachments/assets/76d81fb4-9f25-4cd8-8c29-084961c6cc39" />
+model/                       → AI/ML models (gesture & weapon detection)
+templates/                  → Web interface HTML files
+utils/                      → Helper functions
+wep_img/                    → Captured weapon detection evidence
+
+app.py                      → Main script (camera + gesture detection + weapon detection + Telegram alerts)
+telegram_alerts.py          → Mandatory Telegram alert module used inside app.py
+
+web.py (web1.py)            → Shows captured images & slow-motion videos
+web2.py                     → Fetches and displays the location
+
+weapon_detection.py         → Helper module imported by app.py (NOT run separately)
+testt.py                    → Testing script
+
+README.md                   → Project documentation
+
 
 
 🚀 How It Works
